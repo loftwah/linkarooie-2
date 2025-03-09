@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { PostHogProvider } from 'posthog-js/react';
 import posthog from 'posthog-js';
 import './index.css';
-import './App.css';
 
 // Pages
 import LandingPage from './pages/LandingPage';
@@ -22,9 +21,9 @@ const App: React.FC = () => {
   return (
     <PostHogProvider client={posthog}>
       <Router>
-        <div className="App">
+        <div className="flex flex-col min-h-screen">
           <Navbar />
-          <div className="content-container">
+          <div className="flex-1">
             <Routes>
               <Route path="/" element={<LandingPage />} />
               <Route path="/:username" element={<ProfilePage />} />

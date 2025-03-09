@@ -1,11 +1,10 @@
 import React from 'react'
-import '../styles/Home.css'
 
 const Home = () => {
   return (
-    <div className="home-container">
-      <h1>Welcome to Linkarooie</h1>
-      <p>Your favorite link management platform</p>
+    <div className="container mx-auto py-16 px-4 text-center">
+      <h1 className="text-4xl font-bold text-gray-800 mb-4">Welcome to Linkarooie</h1>
+      <p className="text-xl text-gray-600">Your favorite link management platform</p>
     </div>
   )
 }
