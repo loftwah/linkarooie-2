@@ -7,6 +7,13 @@ import { trackProfileView } from '../utils/analytics';
 const ProfilePage = () => {
   const { username } = useParams<{ username: string }>();
   
+  // Track page view - moved before conditionals to avoid hook order issues
+  useEffect(() => {
+    if (username) {
+      trackProfileView(username);
+    }
+  }, [username]);
+  
   // If username is undefined, navigate to home
   if (!username) {
     return <Navigate to="/" />;
@@ -19,11 +26,6 @@ const ProfilePage = () => {
   if (!profile || !profile.isPublic) {
     return <Navigate to="/" />;
   }
-  
-  // Track page view
-  useEffect(() => {
-    trackProfileView(username);
-  }, [username]);
   
   return (
     <div className="min-h-screen bg-gray-100 py-8 px-4 sm:px-6">

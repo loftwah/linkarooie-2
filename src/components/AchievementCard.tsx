@@ -30,7 +30,7 @@ const AchievementCard: React.FC<AchievementCardProps> = ({
     // For simplified date formatting
     const parts = date.split(' ');
     if (parts.length === 3) {
-      const [day, month, year] = parts;
+      const [day, month] = parts;
       if (!showYear) {
         return `${day} ${month}`; // Return just "DD MMM"
       }

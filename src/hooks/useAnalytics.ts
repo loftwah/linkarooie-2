@@ -11,17 +11,6 @@ interface AnalyticsData {
   error: string | null;
 }
 
-interface PostHogEvent {
-  event: string;
-  properties?: {
-    handle?: string;
-    link_id?: string;
-    $browser?: string;
-    [key: string]: any;
-  };
-  [key: string]: any;
-}
-
 const defaultAnalyticsData: AnalyticsData = {
   pageViews: 0,
   uniqueVisitors: 0,
@@ -37,7 +26,15 @@ const defaultAnalyticsData: AnalyticsData = {
  * @param handle The profile handle/username
  */
 const useAnalytics = (handle: string): AnalyticsData => {
-  const [data, setData] = useState<AnalyticsData>(defaultAnalyticsData);
+  const [analyticsData, setAnalyticsData] = useState<AnalyticsData>({
+    pageViews: 0,
+    uniqueVisitors: 0,
+    browsers: {},
+    locations: {},
+    linkClicks: {},
+    isLoading: true,
+    error: null
+  });
 
   useEffect(() => {
     const fetchAnalytics = async () => {
@@ -45,8 +42,8 @@ const useAnalytics = (handle: string): AnalyticsData => {
         // Since we can't directly query the PostHog API from the frontend securely,
         // we'll use a combination of real data and estimations based on session data
         
-        // Check if posthog is enabled by testing a feature flag call
-        const isConnected = await posthog.isFeatureEnabled('analytics-enabled', {
+        // Check if posthog is enabled - without storing the result since we don't use it
+        await posthog.isFeatureEnabled('analytics-enabled', {
           send_event: false
         });
         
@@ -89,7 +86,7 @@ const useAnalytics = (handle: string): AnalyticsData => {
           'Other': Math.ceil(profileViews * 0.1)
         };
         
-        setData({
+        setAnalyticsData({
           pageViews: profileViews,
           uniqueVisitors: Math.max(1, Math.floor(profileViews * 0.7)), // Estimate unique visitors
           browsers: browserCounts,
@@ -100,7 +97,7 @@ const useAnalytics = (handle: string): AnalyticsData => {
         });
       } catch (err) {
         console.error('Failed to fetch analytics data:', err);
-        setData({
+        setAnalyticsData({
           ...defaultAnalyticsData,
           isLoading: false,
           error: 'Failed to fetch analytics data. Please check your PostHog configuration.'
@@ -111,7 +108,7 @@ const useAnalytics = (handle: string): AnalyticsData => {
     fetchAnalytics();
   }, [handle]);
 
-  return data;
+  return analyticsData;
 };
 
 export default useAnalytics; 
