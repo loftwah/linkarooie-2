@@ -19,14 +19,16 @@
     "public/**/*.svg",
     "README.md",
     "requirements.md",
-    "index.html"
+    "index.html",
+    ".env.example"
   ],
   "ignore": {
     "useGitignore": true,
     "useDefaultPatterns": true,
     "customPatterns": [
       "linkarooie-packed.txt",
-      "src/data/profiles/*"
+      "src/data/profiles/*",
+      ".env"
     ]
   },
   "security": {
