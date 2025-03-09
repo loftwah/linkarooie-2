@@ -1,43 +1,38 @@
 {
-  // === OUTPUT: YOUR PACKED CODE ===
   "output": {
-    "filePath": "my-vite-bun-react-output.txt", // OBVIOUS: Custom name for YOUR project
-    "style": "markdown", // BETTER: Markdown for readability + AI parsing
-    "headerText": "=== VITE + TYPESCRIPT + BUN + REACT + TAILWIND PROJECT ===", // OBVIOUS: Screams your stack
-    "fileSummary": true, // Shows what’s packed
-    "directoryStructure": true, // Maps your layout
-    "removeComments": false, // Keeps context for AI
-    "removeEmptyLines": false, // Preserves structure
-    "showLineNumbers": true, // OBVIOUS: Line numbers for easy reference
-    "includeEmptyDirectories": false // Skips useless folders
+    "filePath": "linkarooie-packed.txt",
+    "style": "plain",
+    "showLineNumbers": true,
+    "fileSummary": true,
+    "directoryStructure": true,
+    "removeComments": false,
+    "removeEmptyLines": true
   },
-  // === INCLUDE: YOUR CORE FILES ===
   "include": [
-    "src/**/*.{ts,tsx}", // React components + TS logic
-    "vite.config.ts", // Vite’s heart
-    "tsconfig.json", // TypeScript rules
-    "tailwind.config.js", // Tailwind setup
-    "src/index.css", // Tailwind CSS entry
-    "public/index.html", // Vite’s HTML root
-    "package.json" // Bun’s dependency list
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/**/*.css",
+    "*.json",
+    "*.js",
+    "*.ts",
+    "public/**/*.html",
+    "public/**/*.svg",
+    "README.md",
+    "requirements.md",
+    "index.html"
   ],
-  // === IGNORE: YOUR JUNK ===
   "ignore": {
-    "useGitignore": true, // Respects your .gitignore
-    "useDefaultPatterns": true, // Skips node_modules, etc.
+    "useGitignore": true,
+    "useDefaultPatterns": true,
     "customPatterns": [
-      "dist/**", // Vite’s build output
-      "bun.lockb", // Bun’s lockfile
-      "*.log", // Logs
-      "*.test.{ts,tsx}" // Skip tests unless you want them
+      "linkarooie-packed.txt",
+      "src/data/profiles/*"
     ]
   },
-  // === SAFETY FIRST ===
   "security": {
-    "enableSecurityCheck": true // Catches keys or secrets
+    "enableSecurityCheck": true
   },
-  // === AI-READY ===
   "tokenCount": {
-    "encoding": "cl100k_base" // Matches me (Grok) + common LLMs
+    "encoding": "cl100k_base"
   }
 }
