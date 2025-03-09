@@ -26,8 +26,10 @@ const ProfilePage = () => {
   }, [username]);
   
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Profile profile={profile} />
+    <div className="min-h-screen bg-gray-100 py-8 px-4 sm:px-6">
+      <div className="max-w-4xl mx-auto">
+        <Profile profile={profile} />
+      </div>
     </div>
   );
 };

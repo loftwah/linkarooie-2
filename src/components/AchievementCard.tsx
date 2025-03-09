@@ -1,5 +1,4 @@
 import React from 'react';
-import '../styles/AchievementCard.css';
 import { Achievement } from '../types';
 import { trackAchievementClick } from '../utils/analytics';
 
@@ -42,17 +41,24 @@ const AchievementCard: React.FC<AchievementCardProps> = ({
   };
 
   return (
-    <div className="achievement-card" onClick={handleClick}>
-      <div className="achievement-icon">
-        <i className={`fas ${achievement.icon}`}></i>
-      </div>
-      <div className="achievement-content">
-        <h3 className="achievement-title">{achievement.title}</h3>
-        <p className="achievement-description">{achievement.description}</p>
-        <div className="achievement-date">
-          <i className="fas fa-calendar-alt"></i>
-          <span>{formatDate()}</span>
+    <div 
+      className="bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow p-4 cursor-pointer flex flex-col h-full"
+      onClick={handleClick}
+    >
+      <div className="flex items-center mb-3">
+        <div className="w-10 h-10 flex items-center justify-center bg-amber-100 text-amber-600 rounded-full mr-3">
+          <i className={`fas ${achievement.icon}`}></i>
         </div>
+        <h3 className="text-lg font-semibold text-gray-800 line-clamp-1">{achievement.title}</h3>
+      </div>
+      
+      <p className="text-gray-600 text-sm mb-4 line-clamp-3 flex-grow">
+        {achievement.description}
+      </p>
+      
+      <div className="mt-auto flex items-center text-xs text-amber-600 font-medium">
+        <i className="fas fa-calendar-alt mr-1"></i>
+        <span>{formatDate()}</span>
       </div>
     </div>
   );

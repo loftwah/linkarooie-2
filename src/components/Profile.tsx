@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import LinkCard from './LinkCard';
 import AchievementCard from './AchievementCard';
-import '../styles/Profile.css';
 import { Profile as ProfileType } from '../types';
 
 interface ProfileProps {
@@ -52,7 +51,7 @@ const Profile: React.FC<ProfileProps> = ({ profile }) => {
   }, [profile]);
   
   if (!profile) {
-    return <div className="profile-loading">Loading profile...</div>;
+    return <div className="flex items-center justify-center min-h-screen text-gray-600">Loading profile...</div>;
   }
   
   // Filter out hidden items for display
@@ -60,59 +59,97 @@ const Profile: React.FC<ProfileProps> = ({ profile }) => {
   const visibleAchievements = profile.achievements.filter(achievement => !achievement.hidden);
   
   return (
-    <div className="profile-container">
-      <div className="profile-header">
-        <div className="profile-banner">
-          <img src={profile.bannerUrl} alt="Profile banner" />
+    <div className="max-w-4xl mx-auto bg-white shadow-md rounded-lg overflow-hidden">
+      {/* Profile Header with Banner and Avatar */}
+      <div className="relative">
+        {/* Banner Image - 3:1 ratio */}
+        <div className="w-full h-48 bg-gray-200 overflow-hidden">
+          <img 
+            src={profile.bannerUrl} 
+            alt="Profile banner" 
+            className="w-full h-full object-cover"
+          />
         </div>
-        <div className="profile-avatar">
-          <img src={profile.avatarUrl} alt={profile.name} />
+        
+        {/* Avatar - positioned partially over banner */}
+        <div className="absolute left-8 -bottom-16">
+          <div className="w-32 h-32 rounded-full border-4 border-white overflow-hidden shadow-lg">
+            <img 
+              src={profile.avatarUrl} 
+              alt={profile.name} 
+              className="w-full h-full object-cover"
+            />
+          </div>
         </div>
-        <div className="profile-info">
-          <h1 className="profile-name">{profile.name}</h1>
-          <p className="profile-handle">@{profile.handle}</p>
-          <p className="profile-description">{profile.description}</p>
+      </div>
+      
+      {/* Profile Info - pushed down to accommodate avatar */}
+      <div className="pt-20 px-8 pb-6">
+        <div className="mb-6">
+          <h1 className="text-2xl font-bold text-gray-800">{profile.name}</h1>
+          <p className="text-indigo-600 font-medium">@{profile.handle}</p>
+          <p className="mt-2 text-gray-600">{profile.description}</p>
           
-          <div className="profile-social-links">
+          {/* Social Links Row */}
+          <div className="flex space-x-4 mt-4">
             {profile.socialLinks.map((social, index) => (
               <a 
                 key={index} 
                 href={social.url} 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className={`social-icon ${social.platform}`}
+                className="text-gray-500 hover:text-indigo-600 transition-colors"
+                aria-label={`${social.platform} profile`}
               >
-                <i className={`fab fa-${social.platform}`}></i>
+                <i className={`fab fa-${social.platform} text-xl`}></i>
               </a>
             ))}
           </div>
           
-          <div className="profile-tags">
+          {/* Tags */}
+          <div className="flex flex-wrap gap-2 mt-4">
             {profile.tags.map((tag, index) => (
-              <span key={index} className="profile-tag">{tag}</span>
+              <span 
+                key={index} 
+                className="px-3 py-1 bg-indigo-100 text-indigo-800 text-sm font-medium rounded-full"
+              >
+                {tag}
+              </span>
             ))}
           </div>
         </div>
       </div>
       
-      <div className="profile-tabs">
-        <button 
-          className={`tab ${activeTab === 'links' ? 'active' : ''}`}
-          onClick={() => setActiveTab('links')}
-        >
-          <i className="fas fa-link"></i> Links
-        </button>
-        <button 
-          className={`tab ${activeTab === 'achievements' ? 'active' : ''}`}
-          onClick={() => setActiveTab('achievements')}
-        >
-          <i className="fas fa-trophy"></i> Achievements
-        </button>
+      {/* Tabs */}
+      <div className="border-b border-gray-200">
+        <div className="flex px-8">
+          <button 
+            className={`py-3 px-4 font-medium border-b-2 transition-colors ${
+              activeTab === 'links' 
+                ? 'text-indigo-600 border-indigo-600' 
+                : 'text-gray-500 border-transparent hover:text-gray-700'
+            }`}
+            onClick={() => setActiveTab('links')}
+          >
+            <i className="fas fa-link mr-2"></i> Links
+          </button>
+          <button 
+            className={`py-3 px-4 font-medium border-b-2 transition-colors ${
+              activeTab === 'achievements' 
+                ? 'text-indigo-600 border-indigo-600' 
+                : 'text-gray-500 border-transparent hover:text-gray-700'
+            }`}
+            onClick={() => setActiveTab('achievements')}
+          >
+            <i className="fas fa-trophy mr-2"></i> Achievements
+          </button>
+        </div>
       </div>
       
-      <div className="profile-content">
+      {/* Content */}
+      <div className="p-8">
         {activeTab === 'links' && (
-          <div className="profile-links">
+          <div className="grid gap-4 md:grid-cols-2">
             {visibleLinks.length > 0 ? (
               visibleLinks.map(link => (
                 <LinkCard 
@@ -122,13 +159,13 @@ const Profile: React.FC<ProfileProps> = ({ profile }) => {
                 />
               ))
             ) : (
-              <div className="no-items">No links available</div>
+              <div className="col-span-2 py-8 text-center text-gray-500">No links available</div>
             )}
           </div>
         )}
         
         {activeTab === 'achievements' && (
-          <div className="profile-achievements">
+          <div className="grid gap-4 md:grid-cols-2">
             {visibleAchievements.length > 0 ? (
               visibleAchievements.map(achievement => (
                 <AchievementCard 
@@ -138,22 +175,27 @@ const Profile: React.FC<ProfileProps> = ({ profile }) => {
                 />
               ))
             ) : (
-              <div className="no-items">No achievements available</div>
+              <div className="col-span-2 py-8 text-center text-gray-500">No achievements available</div>
             )}
           </div>
         )}
       </div>
       
+      {/* Console Message Hint */}
       {showConsoleMessage && (
-        <div className="console-hint">
-          <i className="fas fa-terminal"></i>
+        <div className="mx-8 mb-4 p-3 bg-gray-100 rounded-lg text-gray-600 text-sm flex items-center">
+          <i className="fas fa-terminal mr-2"></i>
           <span>Psst! Check the browser console for hidden content.</span>
         </div>
       )}
       
-      <div className="profile-analytics-link">
-        <a href={`/${profile.handle}/analytics`}>
-          <i className="fas fa-chart-line"></i> View Analytics
+      {/* Analytics Link */}
+      <div className="border-t border-gray-200 px-8 py-4">
+        <a 
+          href={`/${profile.handle}/analytics`}
+          className="flex items-center text-indigo-600 hover:text-indigo-800 transition-colors font-medium"
+        >
+          <i className="fas fa-chart-line mr-2"></i> View Analytics
         </a>
       </div>
     </div>
