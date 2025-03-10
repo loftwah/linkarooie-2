@@ -8,7 +8,7 @@ interface DirectoryProps {
 
 const Directory: React.FC<DirectoryProps> = ({ profiles }) => {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+    <div className="grid grid-cols-1 gap-6 max-w-4xl mx-auto">
       {profiles.filter(p => p.showInDirectory).map(profile => (
         <Link to={`/${profile.handle}`} key={profile.handle} className="bg-gray-800 p-4 rounded-lg shadow hover:bg-gray-700">
           <img src={profile.avatarUrl} alt={profile.name} className="w-24 h-24 rounded-full mx-auto mb-4" />
