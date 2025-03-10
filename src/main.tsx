@@ -4,7 +4,6 @@ import posthog from 'posthog-js'
 
 // Import styles first
 import './index.css'
-import '@fortawesome/fontawesome-free/css/all.min.css'
 
 import App from './App.tsx'
 

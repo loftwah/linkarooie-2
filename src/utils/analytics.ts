@@ -10,33 +10,45 @@ export const trackProfileView = (handle: string): void => {
 };
 
 /**
- * Tracks a link click
- * @param link The link that was clicked
- * @param handle The profile handle/username
+ * Track when a link is clicked
  */
-export const trackLinkClick = (link: Link, handle: string): void => {
-  posthog.capture('link_click', {
-    link_id: link.id,
-    link_title: link.title,
-    link_url: link.url,
-    handle,
-    is_hidden: link.hidden || false
-  });
+export const trackLinkClick = (link: Link) => {
+  // In a real app, this would send data to an analytics service
+  console.log(`Link clicked: ${link.title}`);
+  
+  try {
+    // Example of how you might track with a service like PostHog
+    if (window.posthog) {
+      window.posthog.capture('link_click', {
+        link_id: link.id,
+        link_title: link.title,
+        link_url: link.url
+      });
+    }
+  } catch (error) {
+    console.error('Error tracking link click:', error);
+  }
 };
 
 /**
- * Tracks an achievement click
- * @param achievement The achievement that was clicked
- * @param handle The profile handle/username
+ * Track when an achievement is clicked
  */
-export const trackAchievementClick = (achievement: Achievement, handle: string): void => {
-  posthog.capture('achievement_click', {
-    achievement_id: achievement.id,
-    achievement_title: achievement.title,
-    achievement_url: achievement.url,
-    handle,
-    is_hidden: achievement.hidden || false
-  });
+export const trackAchievementClick = (achievement: Achievement, achievementId: string) => {
+  // In a real app, this would send data to an analytics service
+  console.log(`Achievement clicked: ${achievement.title}`);
+  
+  try {
+    // Example of how you might track with a service like PostHog
+    if (window.posthog) {
+      window.posthog.capture('achievement_click', {
+        achievement_id: achievementId,
+        achievement_title: achievement.title,
+        achievement_unlocked: achievement.unlocked
+      });
+    }
+  } catch (error) {
+    console.error('Error tracking achievement click:', error);
+  }
 };
 
 /**

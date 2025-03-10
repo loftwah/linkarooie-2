@@ -1,21 +1,20 @@
+import React from 'react';
 import { Link } from 'react-router-dom';
 
-const NotFoundPage = () => {
+const NotFoundPage: React.FC = () => {
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-      <div className="text-center px-4">
-        <h1 className="text-6xl font-bold text-indigo-600 mb-4">404</h1>
-        <h2 className="text-3xl font-semibold text-gray-800 mb-6">Page Not Found</h2>
-        <p className="text-lg text-gray-600 mb-8">
-          The page you are looking for doesn't exist or has been moved.
-        </p>
-        <Link
-          to="/"
-          className="inline-block bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-6 rounded-lg transition-colors"
-        >
-          Go Home
-        </Link>
-      </div>
+    <div className="min-h-[70vh] flex flex-col items-center justify-center px-4 text-center">
+      <div className="text-8xl font-bold text-primary dark:text-primary/80 mb-4">404</div>
+      <h1 className="text-3xl font-bold mb-4 text-foreground dark:text-white">Page Not Found</h1>
+      <p className="text-lg text-muted dark:text-muted/80 max-w-md mb-8">
+        The page you are looking for doesn't exist or has been moved.
+      </p>
+      <Link
+        to="/"
+        className="px-6 py-3 bg-primary hover:bg-primary/90 text-white rounded-lg transition-colors"
+      >
+        Go to Homepage
+      </Link>
     </div>
   );
 };

@@ -59,126 +59,75 @@ const Profile: React.FC<ProfileProps> = ({ profile }) => {
   const visibleAchievements = profile.achievements.filter(achievement => !achievement.hidden);
   
   return (
-    <div className="max-w-4xl mx-auto bg-white shadow-md rounded-lg overflow-hidden">
-      {/* Profile Header with Banner and Avatar */}
-      <div className="relative">
-        {/* Banner Image - 3:1 ratio */}
-        <div className="w-full h-48 bg-gray-200 overflow-hidden">
-          <img 
-            src={profile.bannerUrl} 
-            alt="Profile banner" 
-            className="w-full h-full object-cover"
-          />
-        </div>
-        
-        {/* Avatar - positioned partially over banner */}
-        <div className="absolute left-8 -bottom-16">
-          <div className="w-32 h-32 rounded-full border-4 border-white overflow-hidden shadow-lg">
-            <img 
-              src={profile.avatarUrl} 
-              alt={profile.name} 
-              className="w-full h-full object-cover"
-            />
+    <div className="container mx-auto px-4 py-8">
+      <div className="max-w-4xl mx-auto bg-background dark:bg-gray-900 shadow-md rounded-lg overflow-hidden text-foreground dark:text-white">
+        <div className="relative">
+          <div className="w-full h-32 sm:h-48 bg-muted dark:bg-gray-800 overflow-hidden">
+            <img src={profile.bannerUrl} alt="Profile banner" className="w-full h-full object-cover" />
+          </div>
+          <div className="absolute left-4 sm:left-8 -bottom-12 sm:-bottom-16">
+            <div className="w-24 h-24 sm:w-32 sm:h-32 rounded-full border-4 border-background dark:border-gray-900 overflow-hidden shadow-lg">
+              <img src={profile.avatarUrl} alt={profile.name} className="w-full h-full object-cover" />
+            </div>
           </div>
         </div>
-      </div>
-      
-      {/* Profile Info - pushed down to accommodate avatar */}
-      <div className="pt-20 px-8 pb-6">
-        <div className="mb-6">
-          <h1 className="text-2xl font-bold text-gray-800">{profile.name}</h1>
-          <p className="text-indigo-600 font-medium">@{profile.handle}</p>
-          <p className="mt-2 text-gray-600">{profile.description}</p>
+        <div className="pt-16 sm:pt-20 px-4 sm:px-8 pb-6">
+          <h1 className="text-xl sm:text-2xl font-bold">{profile.name}</h1>
+          <p className="text-primary dark:text-primary/80 font-medium">@{profile.handle}</p>
+          <p className="mt-2 text-muted dark:text-muted/80">{profile.description}</p>
           
-          {/* Social Links Row */}
-          <div className="flex space-x-4 mt-4">
-            {profile.socialLinks.map((social, index) => (
-              <a 
-                key={index} 
-                href={social.url} 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="text-gray-500 hover:text-indigo-600 transition-colors"
-                aria-label={`${social.platform} profile`}
-              >
-                <i className={`fab fa-${social.platform} text-xl`}></i>
-              </a>
-            ))}
-          </div>
-          
-          {/* Tags */}
-          <div className="flex flex-wrap gap-2 mt-4">
-            {profile.tags.map((tag, index) => (
+          <div className="mt-4 flex flex-wrap gap-2">
+            {profile.tags.map((tag) => (
               <span 
-                key={index} 
-                className="px-3 py-1 bg-indigo-100 text-indigo-800 text-sm font-medium rounded-full"
+                key={tag} 
+                className="px-3 py-1 bg-primary/10 dark:bg-primary/20 text-primary dark:text-primary/90 rounded-full text-sm font-medium"
               >
                 {tag}
               </span>
             ))}
           </div>
+          
+          <div className="mt-6 flex flex-wrap gap-4">
+            <div className="flex items-center">
+              <i className="fas fa-map-marker-alt text-muted dark:text-muted/80 mr-2"></i>
+              <span>{profile.location}</span>
+            </div>
+            <div className="flex items-center">
+              <i className="fas fa-calendar-alt text-muted dark:text-muted/80 mr-2"></i>
+              <span>Joined {profile.joinDate}</span>
+            </div>
+            <div className="flex items-center">
+              <i className="fas fa-link text-muted dark:text-muted/80 mr-2"></i>
+              <a href={profile.website} className="text-primary dark:text-primary/80 hover:underline" target="_blank" rel="noopener noreferrer">
+                {profile.website.replace(/^https?:\/\//, '')}
+              </a>
+            </div>
+          </div>
+          
+          <div className="mt-8 grid grid-cols-3 gap-4 text-center">
+            <div>
+              <div className="text-xl font-bold">{profile.followers}</div>
+              <div className="text-muted dark:text-muted/80 text-sm">Followers</div>
+            </div>
+            <div>
+              <div className="text-xl font-bold">{profile.following}</div>
+              <div className="text-muted dark:text-muted/80 text-sm">Following</div>
+            </div>
+            <div>
+              <div className="text-xl font-bold">{profile.links}</div>
+              <div className="text-muted dark:text-muted/80 text-sm">Links</div>
+            </div>
+          </div>
         </div>
       </div>
       
-      {/* Tabs */}
-      <div className="border-b border-gray-200">
-        <div className="flex px-8">
-          <button 
-            className={`py-3 px-4 font-medium border-b-2 transition-colors ${
-              activeTab === 'links' 
-                ? 'text-indigo-600 border-indigo-600' 
-                : 'text-gray-500 border-transparent hover:text-gray-700'
-            }`}
-            onClick={() => setActiveTab('links')}
-          >
-            <i className="fas fa-link mr-2"></i> Links
-          </button>
-          <button 
-            className={`py-3 px-4 font-medium border-b-2 transition-colors ${
-              activeTab === 'achievements' 
-                ? 'text-indigo-600 border-indigo-600' 
-                : 'text-gray-500 border-transparent hover:text-gray-700'
-            }`}
-            onClick={() => setActiveTab('achievements')}
-          >
-            <i className="fas fa-trophy mr-2"></i> Achievements
-          </button>
+      <div className="max-w-4xl mx-auto mt-8 p-4 sm:p-8 bg-background dark:bg-gray-900 shadow-md rounded-lg">
+        <h2 className="text-xl font-bold mb-6 text-foreground dark:text-white">My Links</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+          {visibleLinks.map((link) => (
+            <LinkCard key={link.id} link={link} />
+          ))}
         </div>
-      </div>
-      
-      {/* Content */}
-      <div className="p-8">
-        {activeTab === 'links' && (
-          <div className="grid gap-4 md:grid-cols-2">
-            {visibleLinks.length > 0 ? (
-              visibleLinks.map(link => (
-                <LinkCard 
-                  key={link.id} 
-                  link={link} 
-                  handle={profile.handle}
-                />
-              ))
-            ) : (
-              <div className="col-span-2 py-8 text-center text-gray-500">No links available</div>
-            )}
-          </div>
-        )}
-        
-        {activeTab === 'achievements' && (
-          <div className="grid gap-4 md:grid-cols-2">
-            {visibleAchievements.length > 0 ? (
-              visibleAchievements.map(achievement => (
-                <AchievementCard 
-                  key={achievement.id} 
-                  achievement={achievement} 
-                  handle={profile.handle}
-                />
-              ))
-            ) : (
-              <div className="col-span-2 py-8 text-center text-gray-500">No achievements available</div>
-            )}
-          </div>
-        )}
       </div>
       
       {/* Console Message Hint */}

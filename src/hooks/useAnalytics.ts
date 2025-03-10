@@ -1,114 +1,78 @@
 import { useState, useEffect } from 'react';
-import posthog from 'posthog-js';
+import { AnalyticsData } from '../types';
 
-interface AnalyticsData {
-  pageViews: number;
-  uniqueVisitors: number;
-  browsers: Record<string, number>;
-  locations: Record<string, number>;
-  linkClicks: Record<string, number>;
-  isLoading: boolean;
-  error: string | null;
-}
-
-const defaultAnalyticsData: AnalyticsData = {
-  pageViews: 0,
-  uniqueVisitors: 0,
-  browsers: {},
-  locations: {},
-  linkClicks: {},
-  isLoading: true,
-  error: null,
+// Mock data for demonstration
+const generateMockData = (handle: string): AnalyticsData => {
+  return {
+    pageViews: Math.floor(Math.random() * 10000) + 5000,
+    uniqueVisitors: Math.floor(Math.random() * 5000) + 2000,
+    browsers: {
+      'Chrome': Math.floor(Math.random() * 3000) + 2000,
+      'Safari': Math.floor(Math.random() * 1500) + 500,
+      'Firefox': Math.floor(Math.random() * 800) + 200,
+      'Edge': Math.floor(Math.random() * 500) + 100,
+      'Other': Math.floor(Math.random() * 200) + 50,
+    },
+    locations: {
+      'United States': Math.floor(Math.random() * 2000) + 1000,
+      'United Kingdom': Math.floor(Math.random() * 800) + 400,
+      'Canada': Math.floor(Math.random() * 600) + 300,
+      'Germany': Math.floor(Math.random() * 500) + 200,
+      'France': Math.floor(Math.random() * 400) + 150,
+      'Australia': Math.floor(Math.random() * 300) + 100,
+      'Other': Math.floor(Math.random() * 1000) + 500,
+    },
+    linkClicks: {
+      'Portfolio Website': Math.floor(Math.random() * 2000) + 1000,
+      'GitHub Profile': Math.floor(Math.random() * 1500) + 500,
+      'LinkedIn': Math.floor(Math.random() * 1200) + 400,
+      'Latest Article': Math.floor(Math.random() * 1000) + 300,
+      'Twitter': Math.floor(Math.random() * 800) + 200,
+    }
+  };
 };
 
-/**
- * Custom hook to fetch analytics data for a profile
- * @param handle The profile handle/username
- */
-const useAnalytics = (handle: string): AnalyticsData => {
-  const [analyticsData, setAnalyticsData] = useState<AnalyticsData>({
-    pageViews: 0,
-    uniqueVisitors: 0,
-    browsers: {},
-    locations: {},
-    linkClicks: {},
-    isLoading: true,
-    error: null
-  });
+const useAnalytics = (handle: string) => {
+  const [data, setData] = useState<AnalyticsData | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchAnalytics = async () => {
       try {
-        // Since we can't directly query the PostHog API from the frontend securely,
-        // we'll use a combination of real data and estimations based on session data
+        setIsLoading(true);
         
-        // Check if posthog is enabled - without storing the result since we don't use it
-        await posthog.isFeatureEnabled('analytics-enabled', {
-          send_event: false
-        });
+        // In a real app, this would be an API call
+        // For demo purposes, we're using mock data with a delay
+        await new Promise(resolve => setTimeout(resolve, 1000));
         
-        // We'll estimate based on current captured events instead of trying to access raw events
-        // which isn't supported directly in the client
-        let profileViews = 0;
-        let linkClicks: Record<string, number> = {};
-        
-        // Simulate actual data that would have been captured
-        // This is a combination of real event counts and estimations
-        if (posthog.get_distinct_id()) {
-          // If we have a user ID, we've been capturing events
-          profileViews = Math.floor(Math.random() * 5) + 1; // simulate 1-5 profile views
-          
-          // Check if any events were actually captured for this handle
-          if (handle === 'loftwah') { // Our sample profile
-            profileViews = profileViews + 10; // Add bias for demo profile
-            linkClicks = {
-              'blog': Math.ceil(profileViews * 0.6),
-              'secret-link': Math.ceil(profileViews * 0.3)
-            };
-          }
+        if (!handle) {
+          throw new Error('Username is required');
         }
         
-        // Process browsers - based on common market share distribution
-        const browserCounts: Record<string, number> = {
-          'Chrome': Math.ceil(profileViews * 0.65),
-          'Safari': Math.ceil(profileViews * 0.2),
-          'Firefox': Math.ceil(profileViews * 0.1),
-          'Edge': Math.ceil(profileViews * 0.05)
-        };
-        
-        // Process locations based on typical distribution
-        const locationCounts: Record<string, number> = {
-          'United States': Math.ceil(profileViews * 0.45),
-          'United Kingdom': Math.ceil(profileViews * 0.15),
-          'Australia': Math.ceil(profileViews * 0.1),
-          'Canada': Math.ceil(profileViews * 0.1),
-          'Germany': Math.ceil(profileViews * 0.1),
-          'Other': Math.ceil(profileViews * 0.1)
-        };
-        
-        setAnalyticsData({
-          pageViews: profileViews,
-          uniqueVisitors: Math.max(1, Math.floor(profileViews * 0.7)), // Estimate unique visitors
-          browsers: browserCounts,
-          locations: locationCounts,
-          linkClicks: linkClicks,
-          isLoading: false,
-          error: null
-        });
+        // Generate mock data based on the handle
+        const mockData = generateMockData(handle);
+        setData(mockData);
       } catch (err) {
-        console.error('Failed to fetch analytics data:', err);
-        setAnalyticsData({
-          ...defaultAnalyticsData,
-          isLoading: false,
-          error: 'Failed to fetch analytics data. Please check your PostHog configuration.'
-        });
+        console.error('Error fetching analytics:', err);
+        setError(err instanceof Error ? err.message : 'An error occurred while fetching analytics data');
+      } finally {
+        setIsLoading(false);
       }
     };
 
     fetchAnalytics();
   }, [handle]);
 
-  return analyticsData;
+  return {
+    pageViews: data?.pageViews || 0,
+    uniqueVisitors: data?.uniqueVisitors || 0,
+    browsers: data?.browsers || {},
+    locations: data?.locations || {},
+    linkClicks: data?.linkClicks || {},
+    isLoading,
+    error
+  };
 };
 
 export default useAnalytics; 

@@ -1,37 +1,22 @@
-import { useEffect } from 'react';
-import { useParams, Navigate } from 'react-router-dom';
+import React from 'react';
+import { useParams } from 'react-router-dom';
 import Analytics from '../components/Analytics';
-import profiles from '../data/profiles';
-import { trackAnalyticsView } from '../utils/analytics';
 
-const AnalyticsPage = () => {
+const AnalyticsPage: React.FC = () => {
   const { username } = useParams<{ username: string }>();
   
-  // Track analytics page view - moved before conditionals to avoid hook order issues
-  useEffect(() => {
-    if (username) {
-      trackAnalyticsView(username);
-    }
-  }, [username]);
-  
-  // If username is undefined, navigate to home
   if (!username) {
-    return <Navigate to="/" />;
+    return (
+      <div className="container mx-auto px-4 py-8">
+        <div className="max-w-4xl mx-auto bg-background dark:bg-gray-900 shadow-md rounded-lg p-8">
+          <h1 className="text-2xl font-bold mb-4 text-foreground dark:text-white">User Not Found</h1>
+          <p className="text-muted dark:text-muted/80">Please provide a valid username to view analytics.</p>
+        </div>
+      </div>
+    );
   }
   
-  // Get profile data
-  const profile = profiles[username];
-  
-  // If profile doesn't exist or is not public, redirect to home
-  if (!profile || !profile.isPublic) {
-    return <Navigate to="/" />;
-  }
-  
-  return (
-    <div className="min-h-screen bg-gray-50">
-      <Analytics handle={username} />
-    </div>
-  );
+  return <Analytics handle={username} />;
 };
 
 export default AnalyticsPage; 
