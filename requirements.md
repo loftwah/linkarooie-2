@@ -142,8 +142,8 @@ interface Achievement {
 - PostHog account is required
 - PostHog environment variables must be configured:
   ```
-  REACT_APP_PUBLIC_POSTHOG_KEY=your-posthog-key
-  REACT_APP_PUBLIC_POSTHOG_HOST=https://us.i.posthog.com
+  POSTHOG_KEY=your-posthog-key
+  POSTHOG_HOST=https://us.i.posthog.com
   ```
 
 #### PostHog Installation
