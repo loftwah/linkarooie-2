@@ -1,5 +1,6 @@
 import React, { ReactNode, useState, useEffect } from 'react';
 import icon from '../assets/images/icon.png';
+import { Link } from 'react-router-dom';
 
 interface LayoutProps {
   children: ReactNode;
@@ -42,8 +43,10 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           <div className="flex justify-between items-center h-16">
             {/* Logo and title */}
             <div className="flex items-center">
-              <img src={icon} alt="App Icon" className="h-8 w-8 mr-3" />
-              <span className="font-semibold text-xl text-gray-800 dark:text-white">Linkarooie</span>
+              <Link to="/" className="flex items-center">
+                <img src={icon} alt="App Icon" className="h-8 w-8 mr-3" />
+                <span className="font-semibold text-xl text-gray-800 dark:text-white">Linkarooie</span>
+              </Link>
             </div>
             
             {/* Dark mode toggle */}
