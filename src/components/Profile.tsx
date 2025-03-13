@@ -1,23 +1,23 @@
 import React, { useEffect } from 'react';
 import { Profile as ProfileType } from '../types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faGithub, faTwitter, faLinkedin, faBluesky } from '@fortawesome/free-brands-svg-icons';
 import { faChartLine } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 import LinkCard from './LinkCard';
 import AchievementCard from './AchievementCard';
 import { logHiddenContent } from '../utils/console';
-import { Helmet } from 'react-helmet'; // Added react-helmet import
+import { Helmet } from 'react-helmet';
 
 interface ProfileProps {
   profile: ProfileType;
 }
 
+// Map platform names to their icon names
 const platformIcons = {
-  github: faGithub,
-  twitter: faTwitter,
-  bluesky: faBluesky,
-  linkedin: faLinkedin
+  github: ['fab', 'github'],
+  twitter: ['fab', 'twitter'],
+  bluesky: ['fab', 'twitter'], // Using twitter icon as fallback for bluesky
+  linkedin: ['fab', 'linkedin']
 };
 
 const Profile: React.FC<ProfileProps> = ({ profile }) => {
@@ -38,13 +38,13 @@ const Profile: React.FC<ProfileProps> = ({ profile }) => {
         <meta property="og:locale" content="en_AU" />
         <meta property="og:title" content={profile.name} />
         <meta property="og:description" content={profile.description} />
-        <meta property="og:image" content={profile.ogImage} />
+        <meta property="og:image" content={profile.ogImageUrl} />
         <meta property="og:url" content={window.location.href} />
         {/* Twitter Card Meta Tags */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={profile.name} />
         <meta name="twitter:description" content={profile.description} />
-        <meta name="twitter:image" content={profile.ogImage} />
+        <meta name="twitter:image" content={profile.ogImageUrl} />
         <meta name="twitter:site" content={`@${profile.handle}`} />
       </Helmet>
       <div className="min-h-screen bg-white dark:bg-gray-900 text-gray-800 dark:text-white transition-colors duration-200">
@@ -72,7 +72,10 @@ const Profile: React.FC<ProfileProps> = ({ profile }) => {
                   rel="noopener noreferrer"
                   className="text-blue-500 dark:text-lime-300 hover:text-blue-600 dark:hover:text-lime-400 transition-colors"
                 >
-                  <FontAwesomeIcon icon={platformIcons[link.platform]} size="2x" />
+                  <FontAwesomeIcon 
+                    icon={platformIcons[link.platform]} 
+                    size="2x" 
+                  />
                 </a>
               ))}
             </div>

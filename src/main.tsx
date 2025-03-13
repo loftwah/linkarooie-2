@@ -1,6 +1,7 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import './index.css';
+import './utils/fontawesome';
 import App from './App.tsx';
 import { PostHogProvider } from 'posthog-js/react';
 

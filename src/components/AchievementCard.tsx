@@ -1,6 +1,7 @@
 import React from 'react';
 import { Achievement } from '../types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { parseIcon } from '../utils/fontawesome';
 
 interface AchievementCardProps {
   achievement: Achievement;
@@ -23,7 +24,7 @@ const AchievementCard: React.FC<AchievementCardProps> = ({ achievement }) => {
       <div className="flex items-start">
         <div className="flex-shrink-0 bg-purple-100 dark:bg-purple-900/30 p-3 rounded-full mr-4">
           <FontAwesomeIcon 
-            icon={['fas', achievement.icon]} 
+            icon={parseIcon(achievement.icon)} 
             className="text-purple-500 dark:text-lime-300" 
           />
         </div>
