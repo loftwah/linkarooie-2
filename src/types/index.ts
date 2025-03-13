@@ -4,6 +4,7 @@ export interface Profile {
     description: string;
     avatarUrl: string;
     bannerUrl: string;
+    ogImageUrl: string;
     tags: string[];
     socialLinks: SocialLink[];
     links: Link[];

@@ -47,7 +47,7 @@ const Profile: React.FC<ProfileProps> = ({ profile }) => {
         <meta name="twitter:image" content={profile.ogImage} />
         <meta name="twitter:site" content={`@${profile.handle}`} />
       </Helmet>
-      <div className="min-h-screen bg-gray-900 text-white">
+      <div className="min-h-screen bg-white dark:bg-gray-900 text-gray-800 dark:text-white transition-colors duration-200">
         <div className="max-w-3xl mx-auto px-4 pt-12 pb-12">
           <img
             src={profile.bannerUrl}
@@ -60,9 +60,9 @@ const Profile: React.FC<ProfileProps> = ({ profile }) => {
               alt={profile.name}
               className="w-28 h-28 rounded-full mx-auto border-3 border-white shadow-md"
             />
-            <h1 className="text-2xl font-bold mt-4">{profile.name}</h1>
+            <h1 className="text-3xl font-bold text-center">{profile.name}</h1>
             <h2 className="text-xl text-gray-400">@{profile.handle}</h2>
-            <p className="text-lg mt-2">{profile.description}</p>
+            <p className="text-lg mt-2 text-gray-600 dark:text-gray-400">{profile.description}</p>
             <div className="flex justify-center mt-4 space-x-4">
               {profile.socialLinks.map(link => (
                 <a
@@ -70,7 +70,7 @@ const Profile: React.FC<ProfileProps> = ({ profile }) => {
                   href={link.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-lime-300 hover:text-lime-400"
+                  className="text-blue-500 dark:text-lime-300 hover:text-blue-600 dark:hover:text-lime-400 transition-colors"
                 >
                   <FontAwesomeIcon icon={platformIcons[link.platform]} size="2x" />
                 </a>
@@ -78,25 +78,27 @@ const Profile: React.FC<ProfileProps> = ({ profile }) => {
             </div>
           </div>
           <div className="mt-10">
-            <h2 className="text-2xl font-bold text-center">Links</h2>
+            <h2 className="text-2xl font-bold text-center text-gray-800 dark:text-white">Links</h2>
             <div className="space-y-4 mt-4">
               {profile.links.filter(l => !l.hidden).map(link => (
                 <LinkCard key={link.id} link={link} />
               ))}
             </div>
           </div>
-          <div className="mt-10">
-            <h2 className="text-2xl font-bold text-center">Achievements</h2>
-            <div className="space-y-4 mt-4">
-              {profile.achievements.filter(a => !a.hidden).map(achievement => (
-                <AchievementCard key={achievement.id} achievement={achievement} />
-              ))}
+          {profile.achievements && profile.achievements.length > 0 && (
+            <div className="mt-10">
+              <h2 className="text-2xl font-bold text-center text-gray-800 dark:text-white">Achievements</h2>
+              <div className="space-y-4 mt-4">
+                {profile.achievements.filter(a => !a.hidden).map(achievement => (
+                  <AchievementCard key={achievement.id} achievement={achievement} />
+                ))}
+              </div>
             </div>
-          </div>
-          <div className="text-center mt-10">
+          )}
+          <div className="mt-10 text-center">
             <Link
               to={`/${profile.handle}/analytics`}
-              className="inline-block bg-lime-500 hover:bg-lime-600 text-white font-bold py-2 px-4 rounded"
+              className="inline-block bg-blue-500 dark:bg-lime-500 hover:bg-blue-600 dark:hover:bg-lime-600 text-white font-bold py-2 px-4 rounded transition-colors"
             >
               <FontAwesomeIcon icon={faChartLine} className="mr-2" /> View Analytics
             </Link>

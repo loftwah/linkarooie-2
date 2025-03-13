@@ -9,6 +9,7 @@ export const loftwah: Profile = {
   description: "Only the vibe coder remains.",
   avatarUrl: avatarImage,
   bannerUrl: bannerImage,
+  ogImageUrl: ogImage,
   tags: [
     "AWS",
     "DevOps",
