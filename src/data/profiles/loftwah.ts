@@ -10,6 +10,13 @@ export const loftwah: Profile = {
   avatarUrl: avatarImage,
   bannerUrl: bannerImage,
   ogImageUrl: ogImage,
+  ogTitle: "Dean Lofts (Loftwah) - Developer, CTO, and Creator",
+  ogDescription: "Connect with Dean Lofts, a developer, CTO, creator, and tech enthusiast. Explore my projects, content, and social links all in one place.",
+  ogUrl: {
+    github: "https://loftwah.github.io/linkarooie-2/",
+    custom: "https://linkarooie.com/",
+  },
+  bio: "Developer, CTO, Creator. Previously Technical Co-Founder at Airtrack",
   tags: [
     "AWS",
     "DevOps",
@@ -95,7 +102,7 @@ export const loftwah: Profile = {
       id: "wikipedia",
       title: "I'm in Wikipedia lol",
       description:
-        "One day at work, I received an unexpected call from an unknown number, which turned out to be the Liberal Democratic Party of Western Australia. They offered me the opportunity to run as their candidate in Rockingham, Western Australia, assuring me that they would cover all expenses and handle the campaign logistics. I accepted the offer, and as a result, I had the chance to be part of the political process. Now, I’m even mentioned in Wikipedia for my involvement.",
+        "One day at work, I received an unexpected call from an unknown number, which turned out to be the Liberal Democratic Party of Western Australia. They offered me the opportunity to run as their candidate in Rockingham, Western Australia, assuring me that they would cover all expenses and handle the campaign logistics. I accepted the offer, and as a result, I had the chance to be part of the political process. Now, I'm even mentioned in Wikipedia for my involvement.",
       url: "https://en.wikipedia.org/wiki/Candidates_of_the_2021_Western_Australian_state_election",
       icon: "fa-solid fa-landmark",
       hidden: true
