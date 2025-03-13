@@ -149,7 +149,7 @@ async function generateSeoFiles(): Promise<void> {
   fs.writeFileSync(path.resolve(distDir, '404.html'), fourOhFourHtml);
   
   // Create CNAME file (optional, remove if not needed yet)
-  fs.writeFileSync(path.resolve(distDir, 'CNAME'), 'linkarooie.com');
+  // fs.writeFileSync(path.resolve(distDir, 'CNAME'), 'linkarooie.com');
   
   console.log('✅ SEO files and 404.html generation completed successfully!');
 }
