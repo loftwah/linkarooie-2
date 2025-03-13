@@ -37,14 +37,14 @@ const Profile: React.FC<ProfileProps> = ({ profile }) => {
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="Linkarooie" />
         <meta property="og:locale" content="en_AU" />
-        <meta property="og:title" content={profile.name} />
-        <meta property="og:description" content={profile.description} />
+        <meta property="og:title" content={profile.ogTitle || profile.name} />
+        <meta property="og:description" content={profile.ogDescription || profile.description} />
         <meta property="og:image" content={profile.ogImageUrl} />
-        <meta property="og:url" content={window.location.href} />
+        <meta property="og:url" content={profile.ogUrl?.custom || profile.ogUrl?.github || window.location.href} />
         {/* Twitter Card Meta Tags */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={profile.name} />
-        <meta name="twitter:description" content={profile.description} />
+        <meta name="twitter:title" content={profile.ogTitle || profile.name} />
+        <meta name="twitter:description" content={profile.ogDescription || profile.description} />
         <meta name="twitter:image" content={profile.ogImageUrl} />
         <meta name="twitter:site" content={`@${profile.handle}`} />
       </Helmet>
@@ -53,7 +53,7 @@ const Profile: React.FC<ProfileProps> = ({ profile }) => {
           <img
             src={profile.bannerUrl}
             alt="Banner"
-            className="w-[600px] h-40 mx-auto object-cover rounded-lg"
+            className="w-full h-40 mx-auto object-cover rounded-lg"
           />
           <div className="relative text-center -mt-10">
             <img
@@ -61,10 +61,28 @@ const Profile: React.FC<ProfileProps> = ({ profile }) => {
               alt={profile.name}
               className="w-28 h-28 rounded-full mx-auto border-3 border-white shadow-md"
             />
-            <h1 className="text-3xl font-bold text-center">{profile.name}</h1>
+            <h1 className="text-3xl font-bold text-center mt-4">{profile.name}</h1>
             <h2 className="text-xl text-gray-400">@{profile.handle}</h2>
+            
+            {/* Display Bio if available */}
+            {profile.bio && (
+              <p className="text-lg mt-2 text-gray-700 dark:text-gray-300 font-medium">{profile.bio}</p>
+            )}
+            
             <p className="text-lg mt-2 text-gray-600 dark:text-gray-400">{profile.description}</p>
-            <div className="flex justify-center mt-4 space-x-4">
+            
+            {/* Display Tags */}
+            {profile.tags && profile.tags.length > 0 && (
+              <div className="flex flex-wrap justify-center mt-4 gap-2">
+                {profile.tags.map(tag => (
+                  <span key={tag} className="bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-lime-300 text-sm font-medium px-3 py-1 rounded-full">
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            )}
+            
+            <div className="flex justify-center mt-6 space-x-4">
               {profile.socialLinks.map(link => (
                 <a
                   key={link.platform}
