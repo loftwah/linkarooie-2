@@ -38,8 +38,8 @@ export default defineConfig({
         }
       }
     },
-    // Increase the warning limit if needed
-    chunkSizeWarningLimit: 800
+    // Increase warning limit to avoid FontAwesome size warnings
+    chunkSizeWarningLimit: 1600
   },
   resolve: {
     alias: {

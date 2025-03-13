@@ -1,10 +1,75 @@
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { fab } from '@fortawesome/free-brands-svg-icons';
-import { fas } from '@fortawesome/free-solid-svg-icons';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 
+// Brand icons
+import { 
+  faGithub, 
+  faXTwitter,
+  faLinkedin,
+  faBluesky,
+  faAws
+} from '@fortawesome/free-brands-svg-icons';
+
+// Solid icons
+import { 
+  // Icons used in the landing page
+  faLink, 
+  faArrowLeft, 
+  faChartLine, 
+  faPalette, 
+  faCodeBranch,
+  
+  // Icons used in profile links
+  faBlog,
+  faMusic,
+  faMagnifyingGlass,
+  faList,
+  faCode,
+  faPeopleRobbery,
+  faFileAlt,
+  faLandmark,
+  
+  // Icons used in achievements
+  faLock,
+  faCloud,
+  
+  // Default fallback
+  faQuestion
+} from '@fortawesome/free-solid-svg-icons';
+
 // Add all icons to the library
-library.add(fab, fas);
+library.add(
+  // Brand icons
+  faGithub, 
+  faXTwitter,
+  faLinkedin,
+  faBluesky,
+  faAws,
+  
+  // Solid icons - Landing page
+  faLink,
+  faArrowLeft,
+  faChartLine,
+  faPalette,
+  faCodeBranch,
+  
+  // Solid icons - Profile links
+  faBlog,
+  faMusic,
+  faMagnifyingGlass,
+  faList,
+  faCode,
+  faPeopleRobbery,
+  faFileAlt,
+  faLandmark,
+  
+  // Solid icons - Achievements
+  faLock,
+  faCloud,
+  
+  // Default fallback
+  faQuestion
+);
 
 // Helper function to parse icon strings
 export const parseIcon = (iconString: string): IconProp => {
@@ -30,4 +95,4 @@ export const parseIcon = (iconString: string): IconProp => {
   
   // Fallback
   return ['fas', parts[parts.length-1].replace('fa-', '')] as IconProp;
-} 
+}
