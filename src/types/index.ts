@@ -5,6 +5,12 @@ export interface Profile {
     avatarUrl: string;
     bannerUrl: string;
     ogImageUrl: string;
+    ogTitle?: string;
+    ogDescription?: string;
+    ogUrl?: {
+      github?: string;
+      custom?: string;
+    };
     tags: string[];
     socialLinks: SocialLink[];
     links: Link[];
