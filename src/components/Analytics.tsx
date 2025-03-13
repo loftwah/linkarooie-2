@@ -1,11 +1,10 @@
-import React from 'react';
 import { usePostHog } from '../hooks/useAnalytics';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 
-const Analytics: React.FC<{ username: string }> = ({ username }) => {
-  const posthog = usePostHog();
+export function Analytics({ username }: { username: string }) {
+  usePostHog();
 
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900 text-gray-800 dark:text-white p-4 transition-colors duration-200">
@@ -35,6 +34,6 @@ const Analytics: React.FC<{ username: string }> = ({ username }) => {
       </div>
     </div>
   );
-};
+}
 
 export default Analytics;

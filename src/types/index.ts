@@ -17,6 +17,7 @@ export interface Profile {
     achievements: Achievement[];
     isPublic: boolean;
     showInDirectory: boolean;
+    bio?: string;
   }
   
   export interface SocialLink {

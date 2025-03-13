@@ -1,6 +1,9 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
 
+// Add heroImage URL 
+const heroImage = '/images/hero.png'; // Adjust the path as needed
+
 const LandingPage: React.FC = () => {
   return (
     <div>

@@ -1,9 +1,18 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 
-const Analytics = () => {
+export default function Analytics() {
+  const { username } = useParams<{ username: string }>();
+  const totalViews = 1024; // Replace with actual data
+  const uniqueVisitors = 342; // Replace with actual data
+  const avgTimeOnPage = 45; // Replace with actual data
+  const linkStats = [
+    { title: "GitHub", clicks: 156, ctr: "12.4%" },
+    { title: "LinkedIn", clicks: 89, ctr: "8.7%" },
+    { title: "Twitter", clicks: 203, ctr: "19.8%" }
+  ]; // Replace with actual data
+
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900 text-gray-800 dark:text-white transition-colors duration-200">
       <div className="max-w-6xl mx-auto px-4 py-8">
@@ -61,7 +70,7 @@ const Analytics = () => {
                   <tr key={index} className="border-t border-gray-200 dark:border-gray-700">
                     <td className="p-4 text-gray-800 dark:text-gray-200">{link.title}</td>
                     <td className="p-4 text-gray-800 dark:text-gray-200">{link.clicks}</td>
-                    <td className="p-4 text-gray-800 dark:text-gray-200">{link.ctr}%</td>
+                    <td className="p-4 text-gray-800 dark:text-gray-200">{link.ctr}</td>
                   </tr>
                 ))}
               </tbody>
@@ -71,6 +80,4 @@ const Analytics = () => {
       </div>
     </div>
   );
-};
-
-export default Analytics; 
+} 
