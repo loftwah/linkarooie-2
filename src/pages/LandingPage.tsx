@@ -11,6 +11,8 @@ import { faPalette } from '@fortawesome/free-solid-svg-icons';
 import { faChartLine } from '@fortawesome/free-solid-svg-icons';
 import { Helmet } from 'react-helmet';
 
+const BASE_URL = 'https://linkarooie.com'; // Replace with your deployed URL
+
 const LandingPage: React.FC = () => {
   // Get the first profile or null if none exists
   const featuredProfile = profiles.length > 0 ? profiles[0] : null;
@@ -22,7 +24,8 @@ const LandingPage: React.FC = () => {
         <meta name="description" content="Simplify your online presence with a single, customizable link page that showcases all your content." />
         <meta property="og:title" content="Linkarooie - All Your Links in One Place" />
         <meta property="og:description" content="Simplify your online presence with a single, customizable link page that showcases all your content." />
-        <meta property="og:image" content={heroImage} />
+        <meta property="og:image" content={`${BASE_URL}/images/default_og.jpg`} />
+        <meta property="og:url" content={BASE_URL} />
         <meta name="twitter:card" content="summary_large_image" />
       </Helmet>
       

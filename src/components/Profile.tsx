@@ -21,6 +21,8 @@ const platformIcons = {
   linkedin: ['fab', 'linkedin'] as IconProp
 };
 
+const BASE_URL = 'https://linkarooie.com'; // Replace with your custom domain or GitHub Pages URL
+
 const Profile: React.FC<ProfileProps> = ({ profile }) => {
   useEffect(() => {
     const hiddenLinks = profile.links.filter(l => l.hidden);
@@ -29,6 +31,9 @@ const Profile: React.FC<ProfileProps> = ({ profile }) => {
       logHiddenContent(hiddenLinks, hiddenAchievements);
     }
   }, [profile]);
+
+  const ogUrl = profile.ogUrl?.custom || profile.ogUrl?.github || `${BASE_URL}/${profile.handle}`;
+  const absoluteOgImageUrl = `${BASE_URL}${profile.ogImageUrl}`;
 
   return (
     <>
@@ -40,13 +45,13 @@ const Profile: React.FC<ProfileProps> = ({ profile }) => {
         <meta property="og:locale" content="en_AU" />
         <meta property="og:title" content={profile.ogTitle || profile.name} />
         <meta property="og:description" content={profile.ogDescription || profile.description} />
-        <meta property="og:image" content={profile.ogImageUrl} />
-        <meta property="og:url" content={profile.ogUrl?.custom || profile.ogUrl?.github || window.location.href} />
+        <meta property="og:image" content={absoluteOgImageUrl} />
+        <meta property="og:url" content={ogUrl} />
         {/* Twitter Card Meta Tags */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={profile.ogTitle || profile.name} />
         <meta name="twitter:description" content={profile.ogDescription || profile.description} />
-        <meta name="twitter:image" content={profile.ogImageUrl} />
+        <meta name="twitter:image" content={absoluteOgImageUrl} />
         <meta name="twitter:site" content={`@${profile.handle}`} />
       </Helmet>
       <div className="min-h-screen bg-white dark:bg-gray-900 text-gray-800 dark:text-white transition-colors duration-200">
