@@ -33,6 +33,7 @@ const Profile: React.FC<ProfileProps> = ({ profile }) => {
   return (
     <>
       <Helmet>
+        <title>{profile.ogTitle || profile.name} | Linkarooie</title>
         {/* Open Graph Meta Tags */}
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="Linkarooie" />
