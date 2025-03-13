@@ -1,55 +1,51 @@
+
 <!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8">
   <title>Page Not Found | Linkarooie</title>
   <script>
-    // Single Page Apps for GitHub Pages
-    // MIT Licensed code for handling client-side routing with GitHub Pages
-    // https://github.com/rafgraph/spa-github-pages
-    (function(l) {
-      if (l.search[1] === '/' ) {
-        var decoded = l.search.slice(1).split('&').map(function(s) { 
-          return s.replace(/~and~/g, '&')
-        }).join('?');
-        window.history.replaceState(null, null,
-            l.pathname.slice(0, -1) + decoded + l.hash
-        );
-      }
-    }(window.location));
-
-    // Store the current path for later use
-    sessionStorage.setItem('redirectPath', window.location.pathname + window.location.search);
+    // List of known public profiles
+    var knownProfiles = ["loftwah"];
     
-    // Detect if we're on GitHub Pages or the custom domain
+    // Detect base path (GitHub Pages or custom domain)
     var isGitHubPages = window.location.hostname.includes('github.io');
     var basePath = isGitHubPages ? '/linkarooie-2' : '';
     
-    // Redirect to the home page
-    window.location.replace(basePath + '/');
+    // Function to normalize and check the requested path
+    function getRedirectPath(path) {
+      var parts = path.split('/').filter(Boolean); // Split and remove empty segments
+      var relativePath = isGitHubPages ? parts.slice(1) : parts; // Remove basePath for GitHub Pages
+      
+      if (relativePath.length === 1) {
+        var handle = relativePath[0];
+        if (knownProfiles.includes(handle)) {
+          return basePath + '/' + handle + '/';
+        }
+      } else if (relativePath.length === 2) {
+        var handle = relativePath[0];
+        var subPath = relativePath[1];
+        if (knownProfiles.includes(handle) && subPath === 'analytics') {
+          return basePath + '/' + handle + '/analytics/';
+        }
+      }
+      // Default to homepage
+      return basePath + '/';
+    }
+    
+    // Get the requested path and redirect
+    var requestedPath = window.location.pathname;
+    var redirectPath = getRedirectPath(requestedPath);
+    if (redirectPath !== window.location.pathname) {
+      window.location.replace(window.location.origin + redirectPath);
+    } else {
+      // If we're already on the correct path, do nothing or show a 404 message
+      document.body.innerHTML = '<div style="text-align: center; padding: 50px;"><h1>404 - Page Not Found</h1><p>Sorry, this page doesn’t exist.</p><a href="' + basePath + '/">Go Home</a></div>';
+    }
   </script>
-  <style>
-    body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-      text-align: center;
-      padding: 50px;
-      max-width: 600px;
-      margin: 0 auto;
-      color: #333;
-      line-height: 1.6;
-    }
-    h1 { 
-      font-size: 24px; 
-      margin-bottom: 10px;
-    }
-    p { 
-      margin-top: 10px; 
-      color: #666;
-    }
-  </style>
 </head>
 <body>
-  <h1>Page Not Found</h1>
-  <p>Redirecting you to the home page...</p>
+  <p>Redirecting...</p>
 </body>
-</html> 
+</html>
+  
