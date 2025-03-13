@@ -1,26 +1,24 @@
-import React, { useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
+import React, { lazy, Suspense } from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Layout from './components/Layout';
-import LandingPage from './pages/LandingPage';
-import ProfilePage from './pages/ProfilePage';
-import AnalyticsPage from './pages/AnalyticsPage';
+// Dynamically import pages for code splitting
+const LandingPage = lazy(() => import('./pages/LandingPage'));
+const AnalyticsPage = lazy(() => import('./pages/Analytics'));
+// Create a simple NotFound component since it doesn't exist
+const NotFound = lazy(() => Promise.resolve({
+  default: () => (
+    <div className="min-h-screen flex flex-col items-center justify-center p-4 bg-white dark:bg-gray-900 text-gray-800 dark:text-white">
+      <h1 className="text-4xl font-bold mb-4">Page Not Found</h1>
+      <p className="mb-6 text-gray-600 dark:text-gray-400">Sorry, the page you are looking for doesn't exist.</p>
+      <a href="/" className="px-4 py-2 bg-blue-500 dark:bg-lime-500 text-white rounded-lg hover:bg-blue-600 dark:hover:bg-lime-600 transition-colors">
+        Go Home
+      </a>
+    </div>
+  )
+}));
 
-// Component to handle redirects from 404.html
-const RedirectHandler: React.FC = () => {
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    const redirectPath = sessionStorage.getItem('redirectPath');
-    if (redirectPath) {
-      // Remove the item so we don't redirect again
-      sessionStorage.removeItem('redirectPath');
-      // Navigate to the stored path
-      navigate(redirectPath);
-    }
-  }, [navigate]);
-
-  return null;
-};
+// Create a ProfileWrapper component to fetch and pass the profile data
+const ProfileWrapper = lazy(() => import('./pages/ProfilePage'));
 
 function App(): React.ReactElement {
   // Detect if we're on GitHub Pages and use the correct base path
@@ -28,17 +26,18 @@ function App(): React.ReactElement {
   const basename = isGitHubPages ? '/linkarooie-2' : '';
 
   return (
-    <Router basename={basename}>
-      <RedirectHandler />
+    <BrowserRouter basename={basename}>
       <Layout>
-        <Routes>
-          <Route path="/" element={<LandingPage />} />
-          <Route path="/:username" element={<ProfilePage />} />
-          <Route path="/:username/analytics" element={<AnalyticsPage />} />
-          <Route path="*" element={<div className="min-h-screen bg-gray-900 text-white flex items-center justify-center">404 - Not Found</div>} />
-        </Routes>
+        <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Loading...</div>}>
+          <Routes>
+            <Route path="/" element={<LandingPage />} />
+            <Route path="/:username" element={<ProfileWrapper />} />
+            <Route path="/:username/analytics" element={<AnalyticsPage />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </Suspense>
       </Layout>
-    </Router>
+    </BrowserRouter>
   );
 }
 

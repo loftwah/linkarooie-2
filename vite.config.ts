@@ -9,10 +9,41 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     emptyOutDir: true,
+    rollupOptions: {
+      output: {
+        manualChunks: (id) => {
+          // Chunk vendor (third-party) code
+          if (id.includes('node_modules')) {
+            if (id.includes('react') || 
+                id.includes('react-dom') || 
+                id.includes('react-router')) {
+              return 'vendor-react';
+            }
+            if (id.includes('@fortawesome')) {
+              return 'vendor-icons';
+            }
+            return 'vendor'; // all other third party
+          }
+          
+          // Split app code
+          if (id.includes('/src/components/')) {
+            return 'components';
+          }
+          if (id.includes('/src/pages/')) {
+            return 'pages';
+          }
+          
+          // Default chunk
+          return 'index';
+        }
+      }
+    },
+    // Increase the warning limit if needed
+    chunkSizeWarningLimit: 800
   },
   resolve: {
     alias: {
-      '@': resolve(__dirname, 'src'),
+      '@': resolve(__dirname, './src'),
     },
   },
 })
