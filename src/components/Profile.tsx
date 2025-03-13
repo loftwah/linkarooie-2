@@ -21,7 +21,7 @@ const platformIcons = {
   linkedin: ['fab', 'linkedin'] as IconProp
 };
 
-const BASE_URL = 'https://linkarooie.com'; // Replace with your custom domain or GitHub Pages URL
+const BASE_URL = 'https://linkarooie.deanlofts.xyz';
 
 const Profile: React.FC<ProfileProps> = ({ profile }) => {
   useEffect(() => {

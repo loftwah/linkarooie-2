@@ -4,18 +4,14 @@ import bannerImage from '../../assets/images/loftwah_banner.jpg';
 
 export const loftwah: Profile = {
   name: "Dean Lofts",
-  handle: "loftwah",
+  username: "loftwah",
   description: "Only the vibe coder remains.",
   avatarUrl: avatarImage,
   bannerUrl: bannerImage,
   ogImageUrl: '/images/loftwah_og.jpg',
   ogTitle: "Dean Lofts (Loftwah) - Single Dad and Senior DevOps Engineer",
   ogDescription: "Connect with Dean Lofts, a developer, CTO, creator, and tech enthusiast. Explore my projects, content, and social links all in one place.",
-  ogUrl: {
-    github: "https://loftwah.github.io/linkarooie-2/",
-    custom: "https://linkarooie.com/",
-  },
-  bio: "Developer, Creator, Single Dad and Senior DevOps Engineer",
+  bio: "Creator of Linkarooie, DevOps Engineer. Hit me up on Twitter (@loftwah).",
   tags: [
     "AWS",
     "DevOps",

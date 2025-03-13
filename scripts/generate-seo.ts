@@ -10,7 +10,7 @@ const __dirname = path.dirname(__filename);
 
 // Create static HTML files with correct OG tags and a smart 404.html
 async function generateSeoFiles(): Promise<void> {
-  const baseUrl = 'https://linkarooie.com'; // Used for OG tags
+  const baseUrl = 'https://linkarooie.deanlofts.xyz'; // Used for OG tags
   console.log(`Generating SEO files with base URL: ${baseUrl}`);
   
   // Read the main HTML file
@@ -37,7 +37,7 @@ async function generateSeoFiles(): Promise<void> {
   );
   fs.writeFileSync(indexHtmlPath, updatedLandingHtml);
   
-  // Create the images directory if it doesn’t exist
+  // Create the images directory if it doesn't exist
   const imagesDir = path.resolve(distDir, 'images');
   if (!fs.existsSync(imagesDir)) {
     fs.mkdirSync(imagesDir, { recursive: true });
@@ -137,7 +137,7 @@ async function generateSeoFiles(): Promise<void> {
       window.location.replace(window.location.origin + redirectPath);
     } else {
       // If we're already on the correct path, do nothing or show a 404 message
-      document.body.innerHTML = '<div style="text-align: center; padding: 50px;"><h1>404 - Page Not Found</h1><p>Sorry, this page doesn’t exist.</p><a href="' + basePath + '/">Go Home</a></div>';
+      document.body.innerHTML = '<div style="text-align: center; padding: 50px;"><h1>404 - Page Not Found</h1><p>Sorry, this page doesn't exist.</p><a href="' + basePath + '/">Go Home</a></div>';
     }
   </script>
 </head>

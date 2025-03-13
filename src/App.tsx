@@ -23,7 +23,7 @@ const ProfileWrapper = lazy(() => import('./pages/ProfilePage'));
 function App(): React.ReactElement {
   // Detect if we're on GitHub Pages and use the correct base path
   const isGitHubPages = window.location.hostname.includes('github.io');
-  const basename = isGitHubPages ? '/linkarooie-2' : '';
+  const basename = '';
 
   return (
     <BrowserRouter basename={basename}>

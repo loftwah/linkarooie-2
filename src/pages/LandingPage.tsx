@@ -11,7 +11,7 @@ import { faPalette } from '@fortawesome/free-solid-svg-icons';
 import { faChartLine } from '@fortawesome/free-solid-svg-icons';
 import { Helmet } from 'react-helmet';
 
-const BASE_URL = 'https://linkarooie.com'; // Replace with your deployed URL
+const BASE_URL = 'https://linkarooie.deanlofts.xyz'; // Replace with your deployed URL
 
 const LandingPage: React.FC = () => {
   // Get the first profile or null if none exists
