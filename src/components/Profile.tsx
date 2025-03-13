@@ -7,6 +7,7 @@ import LinkCard from './LinkCard';
 import AchievementCard from './AchievementCard';
 import { logHiddenContent } from '../utils/console';
 import { Helmet } from 'react-helmet';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 
 interface ProfileProps {
   profile: ProfileType;
@@ -14,10 +15,10 @@ interface ProfileProps {
 
 // Map platform names to their icon names
 const platformIcons = {
-  github: ['fab', 'github'],
-  twitter: ['fab', 'twitter'],
-  bluesky: ['fab', 'twitter'], // Using twitter icon as fallback for bluesky
-  linkedin: ['fab', 'linkedin']
+  github: ['fab', 'github'] as IconProp,
+  twitter: ['fab', 'x-twitter'] as IconProp, // Updated to X (formerly Twitter)
+  bluesky: ['fab', 'bluesky'] as IconProp, // Correct Bluesky icon from Font Awesome
+  linkedin: ['fab', 'linkedin'] as IconProp
 };
 
 const Profile: React.FC<ProfileProps> = ({ profile }) => {
