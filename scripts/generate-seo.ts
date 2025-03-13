@@ -49,21 +49,41 @@ async function generateSeoFiles(): Promise<void> {
     
     console.log(`Generating SEO file for profile: ${profile.handle}`);
     
-    // Profile OG tags
-    const profileOgTags = `
-      <title>${profile.ogTitle || profile.name} | Linkarooie</title>
-      <meta property="og:type" content="website" />
-      <meta property="og:site_name" content="Linkarooie" />
-      <meta property="og:locale" content="en_AU" />
-      <meta property="og:title" content="${profile.ogTitle || profile.name}" />
-      <meta property="og:description" content="${profile.ogDescription || profile.description}" />
-      <meta property="og:image" content="${baseUrl}${profile.ogImageUrl}" />
-      <meta property="og:url" content="${baseUrl}/${profile.handle}" />
-      <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:title" content="${profile.ogTitle || profile.name}" />
-      <meta name="twitter:description" content="${profile.ogDescription || profile.description}" />
-      <meta name="twitter:image" content="${baseUrl}${profile.ogImageUrl}" />
-      <meta name="twitter:site" content="@${profile.handle}" />
+    // Skip profiles without required properties
+    if (!profile.handle) {
+      console.log('Skipping profile with undefined handle');
+      continue;
+    }
+    
+    // Ensure other required properties exist
+    const name = profile.name || profile.handle;
+    const description = profile.bio || `${name}'s profile`;
+    const ogImageUrl = profile.ogImageUrl || '/assets/default-profile-image.jpg';
+    const twitterHandle = profile.handle || '';
+    
+    const profileHtml = `
+      <!DOCTYPE html>
+      <html lang="en">
+      <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>${name} - Linkarooie</title>
+        <meta name="description" content="${description}" />
+        <meta property="og:title" content="${name} - Linkarooie" />
+        <meta property="og:description" content="${description}" />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="${baseUrl}/${profile.handle}" />
+        <meta property="og:image" content="${baseUrl}${ogImageUrl}" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="${name} - Linkarooie" />
+        <meta name="twitter:description" content="${description}" />
+        <meta name="twitter:image" content="${baseUrl}${ogImageUrl}" />
+        <meta name="twitter:site" content="@${twitterHandle}" />
+      </head>
+      <body>
+        <p>Redirecting...</p>
+      </body>
+      </html>
     `;
     
     // Create profile directory and index.html
@@ -71,7 +91,6 @@ async function generateSeoFiles(): Promise<void> {
     if (!fs.existsSync(profileDir)) {
       fs.mkdirSync(profileDir, { recursive: true });
     }
-    const profileHtml = indexHtml.replace('<!-- OG_TAGS_PLACEHOLDER -->', profileOgTags);
     fs.writeFileSync(path.join(profileDir, 'index.html'), profileHtml);
     
     // Create analytics directory and index.html
